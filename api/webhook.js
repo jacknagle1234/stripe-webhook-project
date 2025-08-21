@@ -38,53 +38,43 @@ export default async function handler(req, res) {
 
   console.log('📦 Event type:', event.type);
 
-  if (event.type === 'checkout.session.completed') {
-    const session = event.data.object;
+ if (event.type === 'checkout.session.completed') {
+  const session = event.data.object;
 
   const email = session.customer_details?.email;
-  const fullName = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately')?.text?.value;
-  const domain = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately1')?.text?.value;
+  const fullName = session.custom_fields?.find(
+    f => f.key === 'websiteurlsubdomainssoldseparately'
+  )?.text?.value;
+  const domain = session.custom_fields?.find(
+    f => f.key === 'websiteurlsubdomainssoldseparately1'
+  )?.text?.value;
   const uuid = session.id;
 
-    console.log("📬 Parsed values:", { email, fullName, domain, uuid });
+  console.log("📬 Parsed values:", { email, fullName, domain, uuid });
 
   try {
-    const { error } = await supabase.from('purchases').insert({
-      email,
-      full_name: fullName,
-      domain,
-    });
+    const { data, error } = await supabase
+      .from('purchases')
+      .insert({
+        email,
+        full_name: fullName,
+        domain,
+      })
+      .select('*');
 
     if (error) {
       console.error("❌ Supabase insert failed:", error.message);
     } else {
-      console.log("✅ Supabase insert successful");
+      console.log("✅ Supabase insert data:", data);
     }
   } catch (dbErr) {
     console.error("❌ Supabase insert threw:", dbErr);
   }
-    
-    console.log('📬 Parsed values:', { email, fullName, domain, uuid });
 
-    try {
-      const { error } = await supabase.from('purchases').insert({
-        email,
-        full_name: fullName,
-        domain,
-        id: uuid,
-        source: 'stripe_checkout',
-      });
+  console.log('▶️ Resend about to send', { to: email });
 
-      if (error) {
-        console.error('❌ Supabase insert failed:', error.message);
-      } else {
-        console.log('✅ Supabase insert successful');
-      }
-    } catch (dbErr) {
-      console.error('❌ Supabase exception:', dbErr?.message || dbErr);
-    }
-
-    console.log('▶️ Resend about to send', { to: email });
+  // … your Resend email code continues here …
+}
 
     try {
       const hasKey = !!(process.env.RESEND_API_KEY && process.env.RESEND_API_KEY.length > 10);
