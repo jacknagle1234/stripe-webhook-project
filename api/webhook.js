@@ -60,23 +60,14 @@ export default async function handler(req, res) {
       console.log("✅ Supabase insert successful");
     }
 
-// 🔽 Add this block right before or instead of your resend.emails.send
+try {
   console.log("▶️ Resend about to send", { to: email });
 
-  try {
-    const hasKey = !!(process.env.RESEND_API_KEY && process.env.RESEND_API_KEY.length > 10);
-    console.log(
-      "RESEND_API_KEY present:",
-      hasKey,
-      "prefix:",
-      (process.env.RESEND_API_KEY || "").slice(0, 6)
-    );
-
-    await resend.emails.send({
-  from: "DAPEN <onboarding@resend.dev>",
-  to: email,
-  subject: "DAPEN® Defense Fund Coverage Activated",
-  html: `
+  const sendRes = await resend.emails.send({
+    from: "DAPEN <onboarding@resend.dev>",   // switch to your domain later
+    to: email,
+    subject: "DAPEN® Defense Fund Coverage Activated",
+    html: generateHtml(uuid, domain),
     <div role="article" aria-roledescription="email" lang="en"
          style="margin:0;padding:0;background:#f1f3f6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans','Liberation Sans',sans-serif;line-height:1.5;color:#1b1b1b;">
       
@@ -181,10 +172,9 @@ export default async function handler(req, res) {
   `,
 });
 
-    console.log("✅ Resend send ok", { id: result?.id || null });
-  } catch (e) {
-    console.error("❌ Resend send failed:", e?.message || e);
-  }
+  console.log("✅ Resend send ok", { id: sendRes?.id || null });
+} catch (e) {
+  console.error("❌ Resend send failed:", e?.message || e);
 }
 
   res.status(200).json({ received: true });
