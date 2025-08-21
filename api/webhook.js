@@ -14,12 +14,17 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 });
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end();
+  console.log("✅ Webhook triggered");
+
+  if (req.method !== 'POST') {
+    console.log("❌ Invalid method");
+    return res.status(405).end();
+  }
 
   const sig = req.headers['stripe-signature'];
   const buf = await buffer(req);
-
   let event;
+
   try {
     event = stripe.webhooks.constructEvent(
       buf.toString(),
@@ -27,9 +32,11 @@ export default async function handler(req, res) {
       process.env.STRIPE_WEBHOOK_SECRET
     );
   } catch (err) {
-    console.error('Webhook signature error:', err.message);
+    console.error("❌ Stripe signature error:", err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
+
+  console.log("📦 Event type:", event.type);
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
@@ -38,12 +45,19 @@ export default async function handler(req, res) {
     const fullName = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately')?.text?.value;
     const domain = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately1')?.text?.value;
 
-    // Save to Supabase
-    await supabase.from('purchases').insert({
+    console.log("📬 Parsed values:", { email, fullName, domain });
+
+    const { error } = await supabase.from('purchases').insert({
       email,
       full_name: fullName,
       domain,
     });
+
+    if (error) {
+      console.error("❌ Supabase insert failed:", error.message);
+    } else {
+      console.log("✅ Supabase insert successful");
+    }
 
 // Send welcome email
 await resend.emails.send({
