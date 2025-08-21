@@ -41,10 +41,28 @@ export default async function handler(req, res) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
 
-    const email = session.customer_details?.email || session.customer_email || null;
+  const email = session.customer_details?.email;
+  const fullName = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately')?.text?.value;
+  const domain = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately1')?.text?.value;
+  const uuid = session.id;
 
-    const fullName = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately')?.text?.value || null;
-    const domain   = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately1')?.text?.value || null;
+    console.log("📬 Parsed values:", { email, fullName, domain, uuid });
+
+  try {
+    const { error } = await supabase.from('purchases').insert({
+      email,
+      full_name: fullName,
+      domain,
+    });
+
+    if (error) {
+      console.error("❌ Supabase insert failed:", error.message);
+    } else {
+      console.log("✅ Supabase insert successful");
+    }
+  } catch (dbErr) {
+    console.error("❌ Supabase insert threw:", dbErr);
+  }
     
     console.log('📬 Parsed values:', { email, fullName, domain, uuid });
 
