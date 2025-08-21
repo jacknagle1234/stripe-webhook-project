@@ -1,0 +1,26 @@
+{
+  "name": "stripe-webhook-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacknagle1234/stripe-webhook-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jacknagle1234/stripe-webhook-project/issues"
+  },
+  "homepage": "https://github.com/jacknagle1234/stripe-webhook-project#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.55.0",
+    "micro": "^10.0.1",
+    "resend": "^6.0.1",
+    "stripe": "^18.4.0"
+  }
+}
