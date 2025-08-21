@@ -1,24 +1,11 @@
 {
   "name": "stripe-webhook-project",
   "version": "1.0.0",
-  "description": "Stripe webhook → Supabase → Resend",
-  "main": "index.js",
+  "description": "Stripe webhook → Supabase → Resend (bare Node.js + micro)",
+  "main": "server.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jacknagle1234/stripe-webhook-project.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jacknagle1234/stripe-webhook-project/issues"
-  },
-  "homepage": "https://github.com/jacknagle1234/stripe-webhook-project#readme",
   "dependencies": {
     "@supabase/supabase-js": "^2.55.0",
     "micro": "^10.0.1",
