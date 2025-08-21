@@ -35,8 +35,8 @@ export default async function handler(req, res) {
     const session = event.data.object;
 
     const email = session.customer_details?.email;
-    const fullName = session.custom_fields?.find(f => f.key === 'full_name')?.text?.value;
-    const domain = session.custom_fields?.find(f => f.key === 'domain')?.text?.value;
+    const fullName = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately')?.text?.value;
+    const domain = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately1')?.text?.value;
 
     // Save to Supabase
     await supabase.from('purchases').insert({
@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
     // Send welcome email
     await resend.emails.send({
-      from: 'DAPEN <welcome@dapen.org>',
+      from: 'DAPEN <donotreply@dapen.org>',
       to: email,
       subject: 'Welcome to DAPEN',
       html: `<p>Hi ${fullName || 'there'},</p><p>Thanks for joining! We’ve registered your domain: <strong>${domain}</strong>.</p>`,
