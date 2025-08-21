@@ -56,13 +56,14 @@ module.exports = async function handler(req, res) {
 
     console.log('📬 Parsed values:', { email, fullName, domain, uuid });
 
-    let purchaseId = null;
+    let rowId = null;
     // ✅ Single insert — ONLY columns that exist in your purchases table
     try {
-      const { data, error } = await supabase
+      purchaseId
         .from('purchases')
         .insert({ email, full_name: fullName, domain })
-        .select('*');
+        .select('id')
+        .single();
 
       if (error) {
         console.error('❌ Supabase insert error:', {
@@ -72,8 +73,8 @@ module.exports = async function handler(req, res) {
           code: error.code,
         });
       } else {
+        rowId = data.id;
         console.log('✅ Supabase insert data:', data);
-        purchaseId = data?.[0]?.id || null;
       }
     } catch (dbErr) {
       console.error('💥 Supabase insert threw:', dbErr);
@@ -129,11 +130,11 @@ module.exports = async function handler(req, res) {
               <div style="display:flex;flex-wrap:wrap;">
                 <div style="flex:1 1 220px;padding:12px 16px;background:#f9f9f9;border-bottom:1px solid #e6e6e6;">
                   <div style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#5c5c5c;">Reference</div>
-                  <div style="font-weight:600;">${purchaseId || uuid}</div>
+                  <div style="font-weight:600;">${rowId || '(Contact Us)'}</div>
                 </div>
                 <div style="flex:2 1 300px;padding:12px 16px;background:#fff;border-left:1px solid #e6e6e6;border-bottom:1px solid #e6e6e6;">
                   <div style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#5c5c5c;">Protected URL</div>
-                  <div style="word-break:break-all;">${domain || '(not provided)'}</div>
+                  <div style="word-break:break-all;">${domain || '(Contact Us)'}</div>
                 </div>
                 <div style="flex:1 1 100%;padding:12px 16px;background:#fff;">
                   <div style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#5c5c5c;">Coverage Summary</div>
