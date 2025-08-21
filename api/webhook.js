@@ -43,13 +43,9 @@ export default async function handler(req, res) {
 
     const email = session.customer_details?.email || session.customer_email || null;
 
-    // Make sure these keys exactly match your Stripe Payment Link custom field keys
     const fullName = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately')?.text?.value || null;
     const domain   = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately1')?.text?.value || null;
-
-    // Use the session id as a stable reference for your plan ID
-    const uuid = session.id;
-
+    
     console.log('📬 Parsed values:', { email, fullName, domain, uuid });
 
     try {
