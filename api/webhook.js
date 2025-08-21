@@ -57,7 +57,7 @@ export default async function handler(req, res) {
         email,
         full_name: fullName,
         domain,
-        plan_id: uuid,
+        id: uuid,
         source: 'stripe_checkout',
       });
 
@@ -87,7 +87,7 @@ export default async function handler(req, res) {
 
       // ✅ capture the result so result?.id is defined
       const result = await resend.emails.send({
-        from: 'DAPEN <donotreply@dapen.org>', // use your verified domain/sender
+        from: 'DAPEN <onboarding@resend.dev>', // use your verified domain/sender
         to: email,
         subject: 'DAPEN® Defense Fund Coverage Activated',
         html: `
