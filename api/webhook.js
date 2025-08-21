@@ -59,7 +59,7 @@ module.exports = async function handler(req, res) {
     let rowId = null;
     // ✅ Single insert — ONLY columns that exist in your purchases table
     try {
-      purchaseId
+      const { data, error } = await supabase
         .from('purchases')
         .insert({ email, full_name: fullName, domain })
         .select('id')
