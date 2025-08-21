@@ -61,7 +61,7 @@ export default async function handler(req, res) {
 
 // Send welcome email
 await resend.emails.send({
-  from: 'DAPEN <donotreply@dapen.org>',
+  from: 'DAPEN <from: "onboarding@resend.dev">',
   to: email,
   subject: 'DAPEN® Defense Fund Coverage Activated',
   html: `
