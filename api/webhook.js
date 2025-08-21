@@ -44,6 +44,7 @@ export default async function handler(req, res) {
     const email = session.customer_details?.email;
     const fullName = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately')?.text?.value;
     const domain = session.custom_fields?.find(f => f.key === 'websiteurlsubdomainssoldseparately1')?.text?.value;
+    const uuid = session.id;
 
     console.log("📬 Parsed values:", { email, fullName, domain });
 
