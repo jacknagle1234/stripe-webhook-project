@@ -71,13 +71,13 @@ export default async function handler(req, res) {
       (process.env.RESEND_API_KEY || "").slice(0, 6)
     );
 
-    const result = await resend.emails.send({
-      from: "onboarding@resend.dev",   // keep this for testing
-      to: email,
-      subject: "Test",
-      html: 
-     <div role="article" aria-roledescription="email" lang="en"
-     style="margin:0;padding:0;background:#f1f3f6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans','Liberation Sans',sans-serif;line-height:1.5;color:#1b1b1b;">
+    await resend.emails.send({
+  from: "DAPEN <onboarding@resend.dev>",
+  to: email,
+  subject: "DAPEN® Defense Fund Coverage Activated",
+  html: `
+    <div role="article" aria-roledescription="email" lang="en"
+         style="margin:0;padding:0;background:#f1f3f6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans','Liberation Sans',sans-serif;line-height:1.5;color:#1b1b1b;">
       
       <!-- Top identifier / banner -->
       <div style="background:#0b4778;color:#fff;padding:8px 0;">
@@ -115,11 +115,11 @@ export default async function handler(req, res) {
               <div style="display:flex;flex-wrap:wrap;">
                 <div style="flex:1 1 220px;padding:12px 16px;background:#f9f9f9;border-bottom:1px solid #e6e6e6;">
                   <div style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#5c5c5c;">Plan ID</div>
-                  <div style="font-weight:600;">\${uuid}</div>
+                  <div style="font-weight:600;">${uuid}</div>
                 </div>
                 <div style="flex:2 1 300px;padding:12px 16px;background:#fff;border-left:1px solid #e6e6e6;border-bottom:1px solid #e6e6e6;">
                   <div style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#5c5c5c;">Protected URL</div>
-                  <div style="word-break:break-all;">\${domain}</div>
+                  <div style="word-break:break-all;">${domain}</div>
                 </div>
                 <div style="flex:1 1 100%;padding:12px 16px;background:#fff;">
                   <div style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#5c5c5c;">Coverage Summary</div>
@@ -173,7 +173,7 @@ export default async function handler(req, res) {
 
         <!-- Provenance line -->
         <p style="margin:12px 4px 0 4px;font-size:11px;color:#6f6f6f;text-align:center;">
-          You’re receiving this message because coverage for \${domain} was activated with the DAPEN® Defense Fund.
+          You’re receiving this message because coverage for ${domain} was activated with the DAPEN® Defense Fund.
         </p>
       </div>
     </div>
