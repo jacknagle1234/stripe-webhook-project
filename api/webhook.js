@@ -98,15 +98,14 @@ module.exports = async function handler(req, res) {
       <div style="background:#0b4778;color:#fff;padding:8px 0;">
         <div style="max-width:640px;margin:0 auto;padding:0 24px;font-size:13px;">
           <span aria-hidden="true" style="margin-right:6px;">🔒</span>
-          Official message from <strong>DAPEN.org</strong>
+          Official message from <strong>DAPEN.org®</strong>
         </div>
       </div>
 
       <!-- Header bar -->
       <div style="background:#005ea2;color:#fff;">
         <div style="max-width:640px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:16px;">
-          <img src="https://www.dapen.org/assets/images/dapen-logo-3.png"
-               alt="DAPEN Logo" style="height:36px;width:auto;display:block;border:0;"/>
+          <div style="font-size:20px;font-weight:700;white-space:nowrap;">DAPEN.org®</div>
           <div style="border-left:2px solid rgba(255,255,255,0.4);padding-left:12px;">
             <div style="font-size:12px;letter-spacing:.06em;opacity:.9;text-transform:uppercase;">Defense Fund</div>
             <div style="font-size:18px;font-weight:600;">Coverage Confirmation</div>
@@ -136,10 +135,6 @@ module.exports = async function handler(req, res) {
                   <div style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#5c5c5c;">Protected URL</div>
                   <div style="word-break:break-all;">${domain || '(Contact Us)'}</div>
                 </div>
-                <div style="flex:1 1 100%;padding:12px 16px;background:#fff;">
-                  <div style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#5c5c5c;">Coverage Summary</div>
-                  <div>Attorney-drafted response &amp; developer remediation for ADA demand letters during your coverage period.</div>
-                </div>
               </div>
             </div>
 
@@ -148,7 +143,6 @@ module.exports = async function handler(req, res) {
             <ul style="margin:0 0 16px 24px;padding:0;">
               <li style="margin:6px 0;">Legal response drafted by an ADA-specialized attorney</li>
               <li style="margin:6px 0;">WCAG&nbsp;2.2-guided developer fixes for identified issues</li>
-              <li style="margin:6px 0;">Direct access to experts to reduce risk of escalation</li>
             </ul>
           </div>
 
