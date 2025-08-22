@@ -87,7 +87,7 @@ module.exports = async function handler(req, res) {
       if (!email) throw new Error('Missing recipient email');
 
       const sendResult = await resend.emails.send({
-        from: 'DAPEN <onboarding@resend.dev>',
+        from: 'DAPEN.org® <donotreply@dapen.org>',
         to: email,
         subject: 'DAPEN® Defense Fund Coverage Activated',
         html: `
