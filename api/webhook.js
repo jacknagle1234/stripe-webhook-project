@@ -128,7 +128,7 @@ module.exports = async function handler(req, res) {
             <div style="margin:16px 0;border:1px solid #e6e6e6;border-radius:6px;">
               <div style="display:flex;flex-wrap:wrap;">
                 <div style="flex:1 1 220px;padding:12px 16px;background:#f9f9f9;border-bottom:1px solid #e6e6e6;">
-                  <div style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#5c5c5c;">Reference</div>
+                  <div style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#5c5c5c;">Plan ID</div>
                   <div style="font-weight:600;">${rowId || '(Contact Us)'}</div>
                 </div>
                 <div style="flex:2 1 300px;padding:12px 16px;background:#fff;border-left:1px solid #e6e6e6;border-bottom:1px solid #e6e6e6;">
